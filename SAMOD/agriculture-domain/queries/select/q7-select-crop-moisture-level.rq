@@ -1,0 +1,10 @@
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+PREFIX hmas: <https://purl.org/hmas/>
+
+SELECT ?cropMoistureLevel WHERE {
+GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#> {
+   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-715145db-8d77-4598-93e8-e815ab8575fd> as ?crop)
+   ?crop was:requiredMoistureLevel ?level.
+   ?level was:CropMoistureLevel ?cropMoistureLevel.
+ }
+}
