@@ -1,60 +1,160 @@
-@prefix ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-danai#> .
-@prefix was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#> .
-@prefix hmas: <https://purl.org/hmas/> .
-@prefix td: <https://www.w3.org/2019/wot/td#> .
-@prefix wotsec: <https://www.w3.org/2019/wot/security#> .
-@prefix htv: <http://www.w3.org/2011/http#> .
-@prefix hctl: <https://www.w3.org/2019/wot/hypermedia#> .
-@prefix js: <https://www.w3.org/2019/wot/json-schema#> .
+@prefix : <https://was-course.interactions.ics.unisg.ch/farm-ontology#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix gn: <http://www.geonames.org/ontology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
 
-ex:farm-17c04810-567a-4236-b310-611bb4fd2a8c a was:Farm;
-  hmas:contains ex:tractor-34541705-7798-4a16-b76b-5fec2861e077,
-    ex:tractor-ae039570-396e-424f-9008-2142c3201b73 .
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#farm-5a88f1fc-9cc8-4648-8342-278bf27eefe0>
+  a :Farm;
+  <https://purl.org/hmas/contains> <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#tractor-9936ebf5-3068-481c-92d1-f5923f02f686>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#tractor-c000b867-841b-4eed-af6a-aba0c484bb37>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-ffe1c9df-7bbd-4c05-ad89-b1e29fa66cac>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-4d33721f-0644-4a9b-90ac-0aefc2657b36>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-eed351eb-24f8-46e3-89d8-ba266b051481>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-81655147-b657-42ec-bd23-cbbd5773e661> .
 
-ex:tractor-34541705-7798-4a16-b76b-5fec2861e077 a td:Thing, was:Tractor;
-  hmas:hasProfile <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor1.ttl> ;
-  td:title "A tractor that can be used for monitoring the moisture level of soil in a farm.";
-  td:hasSecurityConfiguration [ a wotsec:NoSecurityScheme];
-  td:hasBase <http://localhost:1080/api/tractors/1/>;
-  td:hasActionAffordance [ a td:ActionAffordance, was:ReadSoilMoistureAffordance;
-    td:name "Read Moisture Level";
-    td:hasForm [
-      htv:methodName "GET";
-      hctl:hasTarget <http://localhost:1080/api/tractors/1/moisture>;
-      hctl:forContentType "application/json";
-      hctl:hasOperationType td:invokeAction
-    ];
-    td:hasInputSchema [ a js:ArraySchema, was:Coordinates;
-      js:minItems "4"^^xsd:int;
-      js:maxItems "4"^^xsd:int;
-      js:items [ a js:IntegerSchema;
-        js:minimum "0"^^xsd:int;
-        js:maximum "2"^^xsd:int
-      ]
-    ];
-    td:hasOutputSchema [ a js:IntegerSchema, was:SoilMoisture ]
-  ] .
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#tractor-9936ebf5-3068-481c-92d1-f5923f02f686>
+  a :Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for monitoring the moisture level of soil in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node296;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/1/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node297;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor1.ttl> .
 
-ex:tractor-ae039570-396e-424f-9008-2142c3201b73 a td:Thing, was:Tractor;
-  hmas:hasProfile <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor2.ttl> ;
-  td:title "A tractor that can be used for irrigating sections in a farm.";
-  td:hasSecurityConfiguration [ a wotsec:NoSecurityScheme ];
-  td:hasBase <http://localhost:1080/api/tractors/2/>;
-  td:hasActionAffordance [ a td:ActionAffordance, was:IrrigateAffordance;
-    td:name "Irrigate";
-    td:hasForm [
-      htv:methodName "PUT";
-      hctl:hasTarget <http://localhost:1080/api/tractors/2/sprayer>;
-      hctl:forContentType "application/json";
-      hctl:hasOperationType td:invokeAction
-    ];
-    td:hasInputSchema [ a js:ArraySchema, was:Coordinates;
-      js:minItems "4"^^xsd:int;
-      js:maxItems "4"^^xsd:int;
-      js:items [ a js:IntegerSchema;
-        js:minimum "0"^^xsd:int;
-        js:maximum "2"^^xsd:int
-      ]
-    ]
-  ] .
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#tractor-c000b867-841b-4eed-af6a-aba0c484bb37>
+  a :Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for irrigating sections in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node302;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/2/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node303;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor2.ttl> .
+
+_:node296 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node297 a :ReadSoilMoistureAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Read Moisture Level";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node298;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node299;
+  <https://www.w3.org/2019/wot/td#hasOutputSchema> _:node301 .
+
+_:node299 a :Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node300 .
+
+_:node300 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+_:node301 a :SoilMoisture, <https://www.w3.org/2019/wot/json-schema#IntegerSchema> .
+
+_:node302 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node303 a :IrrigateAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Irrigate";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node304;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node305 .
+
+_:node305 a :Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node306 .
+
+_:node306 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-ffe1c9df-7bbd-4c05-ad89-b1e29fa66cac>
+  a :LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "Land section 1";
+  :growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-380c35b3-96d1-42ce-865b-3aa604b4eb6b>;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-d348c099-799e-47d5-ac67-b750f752ee4a> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-d348c099-799e-47d5-ac67-b750f752ee4a>
+  a :Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  :x1 0;
+  :x2 1;
+  :y1 0;
+  :y2 1 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-380c35b3-96d1-42ce-865b-3aa604b4eb6b>
+  a :Crop, :Wheat;
+  :requiredMoistureLevel <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-b18439c0-708d-4cea-b7ea-b34bfff430ba> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-4d33721f-0644-4a9b-90ac-0aefc2657b36>
+  a :LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "Land section 2";
+  :growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-0374ea32-c4f7-40a2-9363-bca9c8e81f47>;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-2fe0e547-01c1-4a7c-9ef8-64b08e62db21> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-2fe0e547-01c1-4a7c-9ef8-64b08e62db21>
+  a :Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  :x1 1;
+  :x2 2;
+  :y1 0;
+  :y2 1 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-0374ea32-c4f7-40a2-9363-bca9c8e81f47>
+  a :Crop, :Wheat;
+  :requiredMoistureLevel <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-58f75550-0625-4c74-a6dd-5915dc51e080> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-eed351eb-24f8-46e3-89d8-ba266b051481>
+  a :LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "Land section 3";
+  :growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-41cdec6f-2be9-461f-b5c4-6064195a7963>;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-8fec205c-885f-4968-83f1-fdadef513b30> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-8fec205c-885f-4968-83f1-fdadef513b30>
+  a :Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  :x1 0;
+  :x2 1;
+  :y1 1;
+  :y2 2 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-41cdec6f-2be9-461f-b5c4-6064195a7963>
+  a :Crop, :Corn;
+  :requiredMoistureLevel <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-98e1ef01-c9d6-4e00-8f25-0309ae68ad13> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#landSection-81655147-b657-42ec-bd23-cbbd5773e661>
+  a :LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "Land section 4";
+  :growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-cb69e62a-220e-4de1-b53d-111c5432b4ca>;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-8c87baf1-4201-49bf-8231-9838a3a3df6e> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#coordinate-8c87baf1-4201-49bf-8231-9838a3a3df6e>
+  a :Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  :x1 1;
+  :x2 2;
+  :y1 1;
+  :y2 2 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#crop-cb69e62a-220e-4de1-b53d-111c5432b4ca>
+  a :Crop, :Corn;
+  :requiredMoistureLevel <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-de440a7b-0dcf-47c9-acf9-81b5ce000f2e> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-b18439c0-708d-4cea-b7ea-b34bfff430ba>
+  :CropMoistureLevel 120 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-58f75550-0625-4c74-a6dd-5915dc51e080>
+  :CropMoistureLevel 120 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-98e1ef01-c9d6-4e00-8f25-0309ae68ad13>
+  :CropMoistureLevel 80 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-valentin#moistureLevel-de440a7b-0dcf-47c9-acf9-81b5ce000f2e>
+  :CropMoistureLevel 80 .
+
+_:node298 <http://www.w3.org/2011/http#methodName> "GET";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/1/moisture>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .
+
+_:node304 <http://www.w3.org/2011/http#methodName> "PUT";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/2/sprayer>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .
